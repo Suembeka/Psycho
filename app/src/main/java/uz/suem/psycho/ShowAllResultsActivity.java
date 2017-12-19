@@ -26,9 +26,14 @@ public class ShowAllResultsActivity extends Activity implements View.OnClickList
 
         sqlHelper = new DatabaseHelper(this);
         final Cursor cursor = sqlHelper.selectAll();
-        if (cursor.moveToFirst()) {
-            do {
+        System.out.println("cursor.getCount() = " + cursor.getCount());
+
+        if (cursor.getCount() > 0) {
+            cursor.moveToFirst();
+            while (cursor.moveToNext()) {
                 Button deleteField = view.findViewById(R.id.button2);
+
+                System.out.println("cursor.getInt(0) = " + cursor.getInt(0));
                 deleteField.setId(cursor.getInt(0));
                 deleteField.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -48,9 +53,8 @@ public class ShowAllResultsActivity extends Activity implements View.OnClickList
                 text.setText(cursor.getString(1));
                 allEds.add(view);
                 linear.addView(view);
-            } while (cursor.moveToNext());
+            }
         }
-
     }
 
     @Override
