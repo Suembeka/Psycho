@@ -1,104 +1,67 @@
 package uz.suem.psycho;
 
-import android.database.Cursor;
-import android.database.sqlite.SQLiteOpenHelper;
-import android.database.sqlite.SQLiteDatabase;
+import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
+import android.provider.BaseColumns;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.io.FileOutputStream;
-import java.sql.SQLException;
+public class DatabaseHelper extends SQLiteOpenHelper implements BaseColumns {
 
-public class DatabaseHelper extends SQLiteOpenHelper {
-    private static String DB_PATH;
     private static String DB_NAME = "database.db";
-    private static final int SCHEMA = 1; // версия базы данных
+    private static final int DB_VERSION = 1; // версия базы данных
     private static final String TABLE = "saved_results";
 
+    private String KEY_ID = "_id";
+    private String KEY_NAME = "name";
+    private String KEY_TEST_NAME = "test_name";
+    private String KEY_RESULT = "result";
+    private String KEY_NOTES = "notes";
+    private String KEY_TIME = "time";
+
     SQLiteDatabase database;
-    private Context myContext;
 
     DatabaseHelper(Context context) {
-        super(context, DB_NAME, null, SCHEMA);
-        this.myContext = context;
-
-        DB_PATH = "/data/data/" + context.getPackageName() + "/" + "databases/";
+        super(context, DB_NAME, null, DB_VERSION);
+        Context myContext = context;
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
+        String CREATE_TABLE = "CREATE TABLE "+TABLE +"("+KEY_ID +" INTEGER PRIMARY KEY AUTOINCREMENT," +
+                KEY_NAME +" TEXT," +KEY_TEST_NAME+" TEXT,"+KEY_RESULT+" TEXT,"+KEY_NOTES+" TEXT,"+KEY_TIME+" TEXT);";
 
-    }
-
-    void createDataBase() throws SQLException {
-        if (database == null) {
-            try {
-                this.getReadableDatabase();
-                copyDataBase();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        } else
-            openDataBase();
-    }
-
-    private void copyDataBase() throws IOException {
-        InputStream myInput = null;
-        try {
-            myInput = myContext.getAssets().open(DB_NAME);
-            String outFileName = DB_PATH + DB_NAME;
-            OutputStream myOutput = new FileOutputStream(outFileName);
-            byte[] buffer = new byte[10];
-            int length;
-            while ((length = myInput.read(buffer)) > 0) {
-                myOutput.write(buffer, 0, length);
-            }
-            myOutput.flush();
-            myOutput.close();
-            myInput.close();
-            openDataBase();
-        } catch (IOException | SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void openDataBase() throws SQLException {
-        String myPath = DB_PATH + DB_NAME;
-        database = SQLiteDatabase.openDatabase(myPath, null, SQLiteDatabase.OPEN_READWRITE);
+        db.execSQL(CREATE_TABLE);
     }
 
     @Override
-    public synchronized void close() {
-        if (database != null)
-            database.close();
-        super.close();
-    }
-
-    @Override
-    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        if (newVersion > oldVersion)
-            try {
-                copyDataBase();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-    }
+    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {}
 
     void addNewNote(String name, String test_name, String result, String notes, String time) {
-        database.execSQL("INSERT INTO " + TABLE + " (name, test_name, result, notes, time) VALUES ('" + name + "', '" + test_name + "', '" + result + "', '" + notes + "', '" + time + "');");
+        database = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(KEY_NAME, name);
+        values.put(KEY_TEST_NAME, test_name);
+        values.put(KEY_RESULT, result);
+        values.put(KEY_NOTES, notes);
+        values.put(KEY_TIME, time);
+
+        database.insert(TABLE, null, values);
+        database.close();
     }
 
-//    Integer getCount(){
-//        return selectAll().getCount();
-//    }
-
     void deleteRow(Integer id){
-        database.execSQL("DELETE FROM "+TABLE+" WHERE id = "+id+";");
+        database = this.getWritableDatabase();
+        database.execSQL("DELETE FROM "+TABLE+" WHERE "+KEY_ID +" = "+id+";");
+        database.close();
     }
 
     Cursor selectAll(){
-        return database.rawQuery("SELECT * FROM "+TABLE+";", null);
+        database = this.getReadableDatabase();
+        Cursor cursor = database.rawQuery("SELECT * FROM "+TABLE, null);
+        //database.close();
+        return cursor;
     }
 }

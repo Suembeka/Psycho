@@ -148,7 +148,7 @@ public class LyusherActivity extends Activity implements View.OnClickListener {
             if (next) {
                 next = false;
                 timer.setVisibility(View.VISIBLE);
-                new CountDownTimer(60000, 1000) {
+                new CountDownTimer(1000, 1000) {
 
                     @SuppressLint("SetTextI18n")
                     public void onTick(long millisUntilFinished) {

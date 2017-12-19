@@ -35,7 +35,6 @@ public class Results extends Activity implements View.OnClickListener {
                 intent.putExtra("test_name", testName);
                 intent.putExtra("result", result.getText().toString());
                 startActivity(intent);
-                startActivity(new Intent(this, SaveResults.class));
                 break;
 
             case R.id.button_end_test:

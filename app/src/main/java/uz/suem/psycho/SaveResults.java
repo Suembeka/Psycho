@@ -7,8 +7,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-import java.sql.SQLException;
-
 public class SaveResults extends Activity implements View.OnClickListener {
     String testName, testResult;
     DatabaseHelper sqlHelper;
@@ -22,19 +20,14 @@ public class SaveResults extends Activity implements View.OnClickListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_save_results);
 
-        sqlHelper = new DatabaseHelper(getApplicationContext());
-        try {
-            sqlHelper.createDataBase();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
         saveBtn = findViewById(R.id.button_save);
         saveBtn.setOnClickListener(this);
         cancelBtn = findViewById(R.id.button_cancel);
         cancelBtn.setOnClickListener(this);
         name = findViewById(R.id.editName);
         notes = findViewById(R.id.editNotes);
+
+        sqlHelper = new DatabaseHelper(this);
     }
 
     @Override
@@ -57,11 +50,5 @@ public class SaveResults extends Activity implements View.OnClickListener {
         }
         startActivity(new Intent(this, MainActivity.class));
         finish();
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        sqlHelper.database.close();
     }
 }

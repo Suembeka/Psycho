@@ -9,7 +9,6 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,16 +21,10 @@ public class ShowAllResultsActivity extends Activity implements View.OnClickList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.show_all_results_activity);
 
-        sqlHelper = new DatabaseHelper(getApplicationContext());
-        try {
-            sqlHelper.createDataBase();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
         final LinearLayout linear = findViewById(R.id.linear);
         final View view = getLayoutInflater().inflate(R.layout.custom_row_layout, null);
 
+        sqlHelper = new DatabaseHelper(this);
         final Cursor cursor = sqlHelper.selectAll();
         cursor.moveToFirst();
         for (int i = 0; i < cursor.getCount(); i++) {
@@ -67,11 +60,5 @@ public class ShowAllResultsActivity extends Activity implements View.OnClickList
                 startActivity(new Intent(this, LyusherActivity.class));
                 break;
         }
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        sqlHelper.database.close();
     }
 }
