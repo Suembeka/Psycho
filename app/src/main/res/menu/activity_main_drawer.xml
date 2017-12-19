@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_lyusher"
+            android:title="@string/test_lyusher" />
+        <item
+            android:id="@+id/nav_mood_eval"
+            android:checkable="false"
+            android:enabled="true"
+            android:title="Оценка настроения"
+            android:visible="true" />
+
+        <item
+            android:id="@+id/show_results"
+            android:checkable="false"
+            android:enabled="true"
+            android:title="Результаты"
+            android:visible="true" />
+    </group>
+
+</menu>
