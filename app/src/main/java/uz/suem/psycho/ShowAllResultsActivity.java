@@ -26,29 +26,29 @@ public class ShowAllResultsActivity extends Activity implements View.OnClickList
 
         sqlHelper = new DatabaseHelper(this);
         final Cursor cursor = sqlHelper.selectAll();
-        cursor.moveToFirst();
-        for (int i = 0; i < cursor.getCount(); i++) {
-            Button deleteField = view.findViewById(R.id.button2);
-            deleteField.setId(cursor.getInt(0));
-            deleteField.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    try {
-                        sqlHelper.deleteRow(v.getId());
+        if (cursor.moveToFirst()) {
+            do {
+                Button deleteField = view.findViewById(R.id.button2);
+                deleteField.setId(cursor.getInt(0));
+                deleteField.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        try {
+                            sqlHelper.deleteRow(v.getId());
 
-                        ((LinearLayout) view.getParent()).removeView(view);
-                        allEds.remove(view);
-                    } catch (IndexOutOfBoundsException ex) {
-                        ex.printStackTrace();
+                            ((LinearLayout) view.getParent()).removeView(view);
+                            allEds.remove(view);
+                        } catch (IndexOutOfBoundsException ex) {
+                            ex.printStackTrace();
+                        }
                     }
-                }
-            });
+                });
 
-            TextView text = view.findViewById(R.id.editText);
-            text.setText(cursor.getString(1));
-            allEds.add(view);
-            linear.addView(view);
-            cursor.moveToNext();
+                TextView text = view.findViewById(R.id.editText);
+                text.setText(cursor.getString(1));
+                allEds.add(view);
+                linear.addView(view);
+            } while (cursor.moveToNext());
         }
 
     }
