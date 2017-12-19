@@ -2,9 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/Psycho.iml" filepath="$PROJECT_DIR$/.idea/Psycho.iml" />
       <module fileurl="file://$PROJECT_DIR$/Psycho.iml" filepath="$PROJECT_DIR$/Psycho.iml" />
-      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://D:\My_documents\Univer\Mobile_programming\Course_work\Psycho\.idea\Psycho.iml" filepath="D:\My_documents\Univer\Mobile_programming\Course_work\Psycho\.idea\Psycho.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>

@@ -13,7 +13,7 @@ public class DatabaseHelper extends SQLiteOpenHelper implements BaseColumns {
     private static final int DB_VERSION = 1; // версия базы данных
     private static final String TABLE = "saved_results";
 
-    private String KEY_ID = "_id";
+    private String KEY_ID = "id";
     private String KEY_NAME = "name";
     private String KEY_TEST_NAME = "test_name";
     private String KEY_RESULT = "result";
@@ -29,10 +29,10 @@ public class DatabaseHelper extends SQLiteOpenHelper implements BaseColumns {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String CREATE_TABLE = "CREATE TABLE "+TABLE +"("+KEY_ID +" INTEGER PRIMARY KEY AUTOINCREMENT," +
-                KEY_NAME +" TEXT," +KEY_TEST_NAME+" TEXT,"+KEY_RESULT+" TEXT,"+KEY_NOTES+" TEXT,"+KEY_TIME+" TEXT);";
-
-        db.execSQL(CREATE_TABLE);
+//        String CREATE_TABLE = "CREATE TABLE "+TABLE +"("+KEY_ID +" INTEGER PRIMARY KEY AUTOINCREMENT," +
+//                KEY_NAME +" TEXT," +KEY_TEST_NAME+" TEXT,"+KEY_RESULT+" TEXT,"+KEY_NOTES+" TEXT,"+KEY_TIME+" TEXT);";
+//
+//        db.execSQL(CREATE_TABLE);
     }
 
     @Override
