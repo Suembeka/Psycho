@@ -8,7 +8,6 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.provider.BaseColumns;
 
 public class DatabaseHelper extends SQLiteOpenHelper implements BaseColumns {
-
     private static String DB_NAME = "database.db";
     private static final int DB_VERSION = 1; // версия базы данных
     private static final String TABLE = "saved_results";
@@ -36,7 +35,8 @@ public class DatabaseHelper extends SQLiteOpenHelper implements BaseColumns {
     }
 
     @Override
-    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {}
+    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+    }
 
     void addNewNote(String name, String test_name, String result, String notes, String time) {
         database = this.getWritableDatabase();
@@ -52,15 +52,15 @@ public class DatabaseHelper extends SQLiteOpenHelper implements BaseColumns {
         database.close();
     }
 
-    void deleteRow(Integer id){
+    void deleteRow(Integer id) {
         database = this.getWritableDatabase();
-        database.execSQL("DELETE FROM "+TABLE+" WHERE "+KEY_ID +" = "+id+";");
+        database.execSQL("DELETE FROM " + TABLE + " WHERE " + KEY_ID + " = " + id + ";");
         database.close();
     }
 
-    Cursor selectAll(){
+    Cursor selectAll() {
         database = this.getReadableDatabase();
-        Cursor cursor = database.rawQuery("SELECT * FROM "+TABLE, null);
+        Cursor cursor = database.rawQuery("SELECT * FROM " + TABLE, null);
         //database.close();
         return cursor;
     }

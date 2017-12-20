@@ -18,7 +18,6 @@ public class MoodEvalStartActivity extends Activity implements View.OnClickListe
         button_start.setOnClickListener(this);
     }
 
-
     @Override
     public void onClick(View v) {
         switch (v.getId()) {

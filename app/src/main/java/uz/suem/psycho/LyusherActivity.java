@@ -13,31 +13,11 @@ import java.util.List;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
-@SuppressLint("ViewConstructor")
-class CC {
-    View textView;
-    int color;
-
-    CC(View textView, int color) {
-        this.textView = textView;
-        this.color = color;
-    }
-
-    public void setColor(int color) {
-        this.color = color;
-    }
-
-    public int getColor() {
-        return color;
-    }
-}
-
 public class LyusherActivity extends Activity implements View.OnClickListener {
     List<CC> fields = new ArrayList<>();
     TextView timer;
     int[] colors;
     String result = "";
-
 
     // + + * * = = - -
     List<Integer> colorSequence1 = new ArrayList<>();
